@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserNotFoundException;
-import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithLoginAlreadyRegistered;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithEmailAlreadyRegistered;
 
 import java.util.Date;
 
@@ -21,7 +21,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-    @ExceptionHandler(UserWithLoginAlreadyRegistered.class)
+    @ExceptionHandler(UserWithEmailAlreadyRegistered.class)
     public ResponseEntity<CustomRestError> handleLoginExistsException(Exception ex, WebRequest request) {
         CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);

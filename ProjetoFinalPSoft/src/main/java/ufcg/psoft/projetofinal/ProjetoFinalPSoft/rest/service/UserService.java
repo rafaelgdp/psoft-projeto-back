@@ -3,7 +3,7 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service;
 import org.springframework.stereotype.Service;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserNotFoundException;
-import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithLoginAlreadyRegistered;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithEmailAlreadyRegistered;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao.UserDAO;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 
@@ -19,18 +19,18 @@ public class UserService {
     }
 
     public User create(User user) {
-    	User foundUser = userDAO.findByLogin(user.getLogin());
+    	User foundUser = userDAO.findByEmail(user.getEmail());
     	if (foundUser != null) {
-    		System.out.println("User " + user.getLogin() + " already registered!!!");
-    		throw new UserWithLoginAlreadyRegistered(user.getLogin());
+    		System.out.println("User " + user.getEmail() + " already registered!!!");
+    		throw new UserWithEmailAlreadyRegistered(user.getEmail());
     	}
-    	System.out.println("I'm saving user " + user.getLogin() + " on the db.");
+    	System.out.println("I'm saving user " + user.getEmail() + " on the db.");
         return userDAO.save(user);
     }
 
     public User update(User userToUpdate) throws UserNotFoundException {
 
-        User user = userDAO.findByLogin(userToUpdate.getLogin());
+        User user = userDAO.findByEmail(userToUpdate.getEmail());
 
         if (user == null)
             throw new  UserNotFoundException("Could not update. The user does not exist.");
@@ -38,8 +38,8 @@ public class UserService {
         return userDAO.save(userToUpdate);
     }
 
-    public User findByLogin(String login) {
-        return userDAO.findByLogin(login);
+    public User findByEmail(String login) {
+        return userDAO.findByEmail(login);
     }
     
     public List<User> findAll() {

@@ -1,4 +1,4 @@
-package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controller;
+package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -27,9 +27,9 @@ public class LoginController {
     public LoginResponse authenticate(@RequestBody User user) throws ServletException {
 
         // Recupera o usuario
-        User authUser = userService.findByLogin(user.getLogin());
+        User authUser = userService.findByEmail(user.getEmail());
         
-        System.out.println("I tried to find this login on the database: " + user.getLogin());
+        System.out.println("I tried to find this login on the database: " + user.getEmail());
 
         // verificacoes
         if(authUser == null) {
@@ -41,13 +41,12 @@ public class LoginController {
         }
 
         String token = Jwts.builder().
-                setSubject(authUser.getLogin()).
+                setSubject(authUser.getEmail()).
                 signWith(SignatureAlgorithm.HS512, TOKEN_KEY).
                 setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
                 .compact();
 
         return new LoginResponse(token);
-
 
     }
 
@@ -59,7 +58,7 @@ public class LoginController {
         }
     }
     
-//    This was just for debug!
+//    This is just for debug!
 //    @GetMapping("/all")
 //    @ResponseBody
 //    public List<User> getAll() {

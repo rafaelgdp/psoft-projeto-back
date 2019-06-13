@@ -12,8 +12,8 @@ import java.io.Serializable;
 @Repository
 public interface UserDAO<T, LOGIN extends Serializable> extends JpaRepository<User, String> {
 
-    @Query(value="Select u from User u where u.login=:plogin")
-    User findByLogin(@Param("plogin") String login);
+    @Query(value="Select u from User u where u.email=:pemail")
+    User findByEmail(@Param("pemail") String email);
 
     @SuppressWarnings("unchecked")
     User save(User user);

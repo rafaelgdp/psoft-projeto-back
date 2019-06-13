@@ -1,4 +1,4 @@
-package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controller;
+package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.filters;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;

@@ -1,9 +1,10 @@
-package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controller;
+package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithEmailAlreadyRegistered;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
@@ -24,8 +25,13 @@ public class RegisterController {
 	@PostMapping(value = "/register")
     @ResponseBody
     public ResponseEntity<User> register(@RequestBody User user) {
+
+        if (userService.findByEmail(user.getEmail()) != null) {
+            throw new UserWithEmailAlreadyRegistered(user.getEmail());
+        }
+
         User newUser = userService.create(user);
-        System.out.println("Salvei este user no bd: " + newUser.getLogin());
+        System.out.println("Salvei este user no bd: " + newUser.getEmail());
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
     }
 
