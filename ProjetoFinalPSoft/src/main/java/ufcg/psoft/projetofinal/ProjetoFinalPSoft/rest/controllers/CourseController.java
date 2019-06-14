@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao.CourseDAO;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CourseService;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
 import javax.servlet.ServletException;
@@ -20,8 +21,8 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping("/courses")
-    public List<Course> authenticate(@RequestBody String substring) throws ServletException {
-
-        
+    public List<Course> getAllCoursesBySubstring(@RequestBody String substring) throws ServletException {
+    	List<Course> courses = courseService.findAllBySubstring(substring);
+    	return courses;
     }
 }

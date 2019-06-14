@@ -30,5 +30,9 @@ public class CourseService {
     public List<Course> findAll() {
         return CourseDAO.findAll();
     }
+    
+    public List<Course> findAllBySubstring(String substr) {
+        return CourseDAO.findAllBySubstring(substr);
+    }
 
 }
