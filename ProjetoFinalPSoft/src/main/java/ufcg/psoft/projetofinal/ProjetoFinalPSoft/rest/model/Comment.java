@@ -16,6 +16,7 @@ public class Comment {
 	private Integer id;
 
 	private String message;
+	private String email;
 
 	public Integer getId() {
 		return id;
@@ -32,7 +33,13 @@ public class Comment {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	
-	
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 }

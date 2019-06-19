@@ -2,7 +2,6 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao;
 
 import java.io.Serializable;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +14,8 @@ public interface CourseDAO<T, ID extends Serializable> extends JpaRepository<Cou
 	
 	@Query(value="select c from Course c where c.name like %:pname%")
 	public List<Course> findAllBySubstring(@Param("pname") String substr);
+	
+	@SuppressWarnings("unchecked")
+	public Course save(Course course);
 
 }

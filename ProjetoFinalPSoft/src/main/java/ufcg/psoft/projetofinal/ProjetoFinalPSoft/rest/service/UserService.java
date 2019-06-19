@@ -42,6 +42,7 @@ public class UserService {
         return userDAO.findByEmail(login);
     }
     
+    // Just for testing purposes
     public List<User> findAll() {
         return userDAO.findAll();
     }

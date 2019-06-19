@@ -25,4 +25,6 @@ public class CourseController {
     	List<Course> courses = courseService.findAllBySubstring(substring);
     	return courses;
     }
+    
+    
 }
