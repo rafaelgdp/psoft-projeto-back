@@ -4,10 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 
 import lombok.Data;
 
@@ -17,10 +21,16 @@ public class Course {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer courseId;
 	
+	@OneToMany(mappedBy="email")
 	private Set<String> userLikes;
+	
+	@OneToMany(mappedBy="grade")
+	@MapKey(name="email")
 	private Map<String, Double> userGrades;
+	
+	@OneToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "commentId")
 	private List<Comment> comments;
 	
 	private String name;

@@ -13,17 +13,17 @@ public class Comment {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer commentId;
 
 	private String message;
 	private String email;
 
 	public Integer getId() {
-		return id;
+		return commentId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.commentId = id;
 	}
 
 	public String getMessage() {
