@@ -21,13 +21,13 @@ public class User {
 	private String firstName;
     private String lastName;
     private String password;
-//    
-//    @OneToMany(mappedBy="grade")
-//	@MapKey(name="email")
-//	private Map<Course, Double> userGrades;
-    
+
     @ManyToMany(mappedBy="userLikes")
     private Set<Course> courses;
+
+//  @OneToMany(mappedBy="grade")
+//	@MapKey(name="email")
+//	private Map<Course, Double> userGrades;
 
     public String getEmail() {
         return email;
@@ -56,4 +56,5 @@ public class User {
     public String getLastName() { return lastName; }
 
     public void setLastName(String lastName) { this.lastName = lastName; }
+
 }

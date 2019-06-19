@@ -35,6 +35,14 @@ public class CourseService {
     public Course findById(Integer id) {
         return courseDAO.findById(id).get();
     }
+
+    public Course findByName(String name) {
+        return courseDAO.findByName(name);
+    }
+
+    public Course addCourse(Course course) {
+        return courseDAO.save(course);
+    }
     
     public Comment addCommentToCourse(Integer courseId, Comment comment) throws ServletException {
     	

@@ -21,43 +21,50 @@ import lombok.Data;
 @Data
 @Entity
 public class Course {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer courseId;
-	
-	@ManyToMany
-	@JoinTable(name="USER_LIKES", joinColumns= {@JoinColumn(name="courseId")}, inverseJoinColumns = {@JoinColumn(name="userEmail")})
-	private Set<User> userLikes;
-	
-	@OneToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "commentId")
-	private List<Comment> comments;
-	
-	private String name;
-		
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public Set<User> getUserLikes() {
-		return userLikes;
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
-	public void setUserLikes(Set<User> userLikes) {
-		this.userLikes = userLikes;
-	}
-	
-	public void addUserLike(User user) {
-		if (user != null)
-			userLikes.add(user);
-	}
-	
-	public void removeUserLike(User user) {
-		userLikes.remove(user);
-	}
+    @ManyToMany
+    @JoinTable(name = "USER_LIKES",
+            joinColumns = {@JoinColumn(name = "courseId")},
+            inverseJoinColumns = {@JoinColumn(name = "userEmail")})
+    private Set<User> userLikes;
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "id")
+    private List<Comment> comments;
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Integer getId() { return id; }
+
+    public void setId(Integer id) { this.id = id; }
+
+    public Set<User> getUserLikes() {
+        return userLikes;
+    }
+
+    public void setUserLikes(Set<User> userLikes) {
+        this.userLikes = userLikes;
+    }
+
+    public void addUserLike(User user) {
+        if (user != null)
+            userLikes.add(user);
+    }
+
+    public void removeUserLike(User user) {
+        userLikes.remove(user);
+    }
 
 //	public Map<String, Double> getUserGrades() {
 //		return userGrades;
@@ -75,17 +82,17 @@ public class Course {
 //		return total / userGrades.size();
 //	}
 
-	public List<Comment> getComments() {
-		return comments;
-	}
+    public List<Comment> getComments() {
+        return comments;
+    }
 
-	public void setComments(List<Comment> comments) {
-		this.comments = comments;
-	}
-	
-	public void addComment(Comment comment) {
-		if (comment != null) {
-			comments.add(comment);	
-		}
-	}
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public void addComment(Comment comment) {
+        if (comment != null) {
+            comments.add(comment);
+        }
+    }
 }

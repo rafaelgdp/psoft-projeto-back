@@ -8,6 +8,8 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithEmailAlr
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
+import javax.servlet.ServletException;
+
 @RestController
 @RequestMapping("/v1/auth")
 public class RegisterController {
@@ -24,7 +26,11 @@ public class RegisterController {
 
 	@PostMapping(value = "/register")
     @ResponseBody
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<User> register(@RequestBody User user) throws ServletException {
+
+        if (user == null) {
+            throw new ServletException("Null user!!");
+        }
 
         if (userService.findByEmail(user.getEmail()) != null) {
             throw new UserWithEmailAlreadyRegistered(user.getEmail());
@@ -33,6 +39,7 @@ public class RegisterController {
         User newUser = userService.create(user);
         System.out.println("Salvei este user no bd: " + newUser.getEmail());
         return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+
     }
 
 }

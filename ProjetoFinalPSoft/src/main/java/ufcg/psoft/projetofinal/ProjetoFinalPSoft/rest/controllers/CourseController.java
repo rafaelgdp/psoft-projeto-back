@@ -1,10 +1,7 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao.CourseDAO;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CourseService;
@@ -24,6 +21,23 @@ public class CourseController {
     public List<Course> getAllCoursesBySubstring(@RequestBody String substring) throws ServletException {
     	List<Course> courses = courseService.findAllBySubstring(substring);
     	return courses;
+    }
+
+    @PostMapping("/courses")
+    public Course addCourse(@RequestBody Course course) throws ServletException {
+
+        if (course == null) {
+            throw new ServletException("No valid course entered.");
+        }
+
+        Course bdCourse = courseService.findByName(course.getName());
+
+        if (bdCourse != null) {
+            throw new ServletException("Course with this name already registered.");
+        }
+
+        return courseService.addCourse(course);
+
     }
     
     
