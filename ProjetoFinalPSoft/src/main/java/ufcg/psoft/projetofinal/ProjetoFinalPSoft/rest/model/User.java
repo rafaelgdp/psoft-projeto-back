@@ -2,8 +2,14 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model;
 
 import lombok.Data;
 
+import java.util.Map;
+import java.util.Set;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.MapKey;
+import javax.persistence.OneToMany;
 
 @Data
 @Entity
@@ -15,6 +21,13 @@ public class User {
 	private String firstName;
     private String lastName;
     private String password;
+//    
+//    @OneToMany(mappedBy="grade")
+//	@MapKey(name="email")
+//	private Map<Course, Double> userGrades;
+    
+    @ManyToMany(mappedBy="userLikes")
+    private Set<Course> courses;
 
     public String getEmail() {
         return email;

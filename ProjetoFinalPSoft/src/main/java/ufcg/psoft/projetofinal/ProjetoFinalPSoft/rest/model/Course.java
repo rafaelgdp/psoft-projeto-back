@@ -10,6 +10,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 
@@ -23,12 +26,9 @@ public class Course {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer courseId;
 	
-	@OneToMany(mappedBy="email")
-	private Set<String> userLikes;
-	
-	@OneToMany(mappedBy="grade")
-	@MapKey(name="email")
-	private Map<String, Double> userGrades;
+	@ManyToMany
+	@JoinTable(name="USER_LIKES", joinColumns= {@JoinColumn(name="courseId")}, inverseJoinColumns = {@JoinColumn(name="userEmail")})
+	private Set<User> userLikes;
 	
 	@OneToMany(fetch= FetchType.EAGER, cascade=CascadeType.ALL, mappedBy = "commentId")
 	private List<Comment> comments;
@@ -42,38 +42,38 @@ public class Course {
 		this.name = name;
 	}
 
-	public Set<String> getUserLikes() {
+	public Set<User> getUserLikes() {
 		return userLikes;
 	}
 
-	public void setUserLikes(Set<String> userLikes) {
+	public void setUserLikes(Set<User> userLikes) {
 		this.userLikes = userLikes;
 	}
 	
-	public void addUserLike(String email) {
-		if (email != null)
-			userLikes.add(email);
+	public void addUserLike(User user) {
+		if (user != null)
+			userLikes.add(user);
 	}
 	
-	public void removeUserLike(String email) {
-		userLikes.remove(email);
+	public void removeUserLike(User user) {
+		userLikes.remove(user);
 	}
 
-	public Map<String, Double> getUserGrades() {
-		return userGrades;
-	}
-
-	public void setUserGrades(Map<String, Double> userGrades) {
-		this.userGrades = userGrades;
-	}
-	
-	public Double getGradeMean() {
-		Double total = 0.0;
-		for (Double grade : userGrades.values()) {
-			total += grade;
-		}
-		return total / userGrades.size();
-	}
+//	public Map<String, Double> getUserGrades() {
+//		return userGrades;
+//	}
+//
+//	public void setUserGrades(Map<User, Double> userGrades) {
+//		this.userGrades = userGrades;
+//	}
+//	
+//	public Double getGradeMean() {
+//		Double total = 0.0;
+//		for (Double grade : userGrades.values()) {
+//			total += grade;
+//		}
+//		return total / userGrades.size();
+//	}
 
 	public List<Comment> getComments() {
 		return comments;
