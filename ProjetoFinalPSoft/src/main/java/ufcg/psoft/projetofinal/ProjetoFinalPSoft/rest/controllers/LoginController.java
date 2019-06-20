@@ -6,6 +6,7 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/v1/auth")
+@CrossOrigin(origins = "*")
 public class LoginController {
 
     private final String TOKEN_KEY = "banana";
