@@ -2,6 +2,8 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserNotFoundException;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.WrongEmailOrPasswordException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
@@ -24,9 +26,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
-
+    
     @PostMapping("/login")
-    public LoginResponse authenticate(@RequestBody User user) throws ServletException {
+    public LoginResponse retrieveUserDetails(@RequestBody User user) throws ServletException {
 
         // Recupera o usuario
         User authUser = userService.findByEmail(user.getEmail());
@@ -35,18 +37,21 @@ public class LoginController {
 
         // verificacoes
         if(authUser == null) {
-            throw new ServletException("Usuario nao encontrado!");
+            throw new UserNotFoundException("Usuario nao encontrado!");
         }
 
         if(!authUser.getPassword().equals(user.getPassword())) {
-            throw new ServletException("Senha invalida!");
+            throw new WrongEmailOrPasswordException("Senha invalida!");
         }
+        
+        authUser.setPassword("no security holes here, pal ;)");
 
         String token = Jwts.builder().
                 setSubject(authUser.getEmail()).
                 signWith(SignatureAlgorithm.HS512, TOKEN_KEY).
-                setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000))
-                .compact();
+                setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000)).
+                claim("user", authUser).
+                compact();
 
         return new LoginResponse(token);
 
