@@ -60,11 +60,4 @@ public class LoginController {
         }
     }
     
-//    This is just for debug!
-//    @GetMapping("/all")
-//    @ResponseBody
-//    public List<User> getAll() {
-//        return userService.findAll();
-//    }
-
 }

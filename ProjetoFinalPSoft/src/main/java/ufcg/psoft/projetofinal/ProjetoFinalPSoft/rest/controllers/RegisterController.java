@@ -27,8 +27,6 @@ public class RegisterController {
 	@PostMapping(value = "/register")
     @ResponseBody
     public ResponseEntity<User> register(@RequestBody User user) throws ServletException {
-
-		System.out.println("GOOT");
 		
         if (user == null) {
             throw new ServletException("Null user!!");

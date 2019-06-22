@@ -9,6 +9,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserNotFoundException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithEmailAlreadyRegistered;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.WrongEmailOrPasswordException;
 
 import java.util.Date;
 
@@ -31,5 +32,11 @@ public class RestExceptionHandler {
     public ResponseEntity<CustomRestError> notFound(Exception ex, WebRequest request) {
         CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler({WrongEmailOrPasswordException.class})
+    public ResponseEntity<CustomRestError> wrongEmailOrPassword(Exception ex, WebRequest request) {
+        CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
     }
 }
