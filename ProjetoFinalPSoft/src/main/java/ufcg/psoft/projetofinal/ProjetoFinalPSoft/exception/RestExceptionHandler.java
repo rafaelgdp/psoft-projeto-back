@@ -28,13 +28,7 @@ public class RestExceptionHandler {
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
     }
 
-    @ExceptionHandler({UserNotFoundException.class})
-    public ResponseEntity<CustomRestError> notFound(Exception ex, WebRequest request) {
-        CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
-        return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_FOUND);
-    }
-    
-    @ExceptionHandler({WrongEmailOrPasswordException.class})
+    @ExceptionHandler({WrongEmailOrPasswordException.class, UserNotFoundException.class})
     public ResponseEntity<CustomRestError> wrongEmailOrPassword(Exception ex, WebRequest request) {
         CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.BAD_REQUEST);
