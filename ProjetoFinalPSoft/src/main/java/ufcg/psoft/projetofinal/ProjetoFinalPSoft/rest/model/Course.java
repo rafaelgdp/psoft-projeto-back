@@ -32,8 +32,17 @@ public class Course {
             inverseJoinColumns = {@JoinColumn(name = "userEmail")})
     private Set<User> userLikes;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "id")
+    @ManyToMany
+    @JoinTable(name = "USER_COMMENTS",
+            joinColumns = {@JoinColumn(name = "courseId")},
+            inverseJoinColumns = {@JoinColumn(name = "userEmail")})
     private List<Comment> comments;
+
+    @ManyToMany
+    @JoinTable(name = "USER_GRADES",
+            joinColumns = {@JoinColumn(name = "courseId")},
+            inverseJoinColumns = {@JoinColumn(name = "userEmail")})
+    private List<Grade> grades;
 
     private String name;
 

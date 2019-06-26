@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.CourseAlreadyRegisteredException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserNotFoundException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserWithEmailAlreadyRegistered;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.WrongEmailOrPasswordException;
@@ -22,8 +23,8 @@ public class RestExceptionHandler {
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
     
-    @ExceptionHandler(UserWithEmailAlreadyRegistered.class)
-    public ResponseEntity<CustomRestError> handleLoginExistsException(Exception ex, WebRequest request) {
+    @ExceptionHandler({UserWithEmailAlreadyRegistered.class, CourseAlreadyRegisteredException.class})
+    public ResponseEntity<CustomRestError> handleLoginOrCourseExistsException(Exception ex, WebRequest request) {
         CustomRestError errorMessage = new CustomRestError(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<CustomRestError>(errorMessage, new HttpHeaders(), HttpStatus.NOT_ACCEPTABLE);
     }
