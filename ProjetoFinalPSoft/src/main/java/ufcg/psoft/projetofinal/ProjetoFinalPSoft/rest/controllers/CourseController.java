@@ -2,6 +2,8 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.CourseAlreadyRegisteredException;
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.NullCourseException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao.CourseDAO;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CourseService;
@@ -21,17 +23,17 @@ public class CourseController {
     private CourseService courseService;
 
     @GetMapping("/courses")
-    public List<Course> getAllCoursesBySubstring(@RequestBody String substring) throws ServletException {
+    public List<Course> getAllCoursesBySubstring(@RequestBody String substring) {
     	List<Course> courses = courseService.findAllBySubstring(substring);
     	return courses;
     }
 
     @SuppressWarnings("deprecation")
-	@PostMapping("/courses")
-    public Course addCourse(@RequestBody Course course) throws ServletException {
+    @PostMapping("/courses")
+    public Course addCourse(@RequestBody Course course) throws NullCourseException, CourseAlreadyRegisteredException {
 
-        if (course == null) {
-            throw new ServletException("No valid course entered.");
+        if (course == null || course.getName().isEmpty()) {
+            throw new NullCourseException("No valid course entered.");
         }
         
         URLDecoder decoder = new URLDecoder();
@@ -39,7 +41,7 @@ public class CourseController {
         Course bdCourse = courseService.findByName(course.getName());
 
         if (bdCourse != null) {
-            throw new ServletException("Course with this name already registered.");
+            throw new CourseAlreadyRegisteredException("Course with this name already registered.");
         }
 
         System.out.println("Saving this course: " + course.getName());
@@ -52,5 +54,5 @@ public class CourseController {
     public void deleteAllCourses() {
     	courseService.deleteAll();
     }
-    
+
 }
