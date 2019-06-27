@@ -12,8 +12,8 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
 // Here, we may add queries to the JpaRepo
 public interface CourseDAO<T, ID extends Serializable> extends JpaRepository<Course, Integer> {
 	
-	@Query(value="select c from Course c where c.name like %:pname%")
-	public List<Course> findAllBySubstring(@Param("pname") String substr);
+	@Query(value="select c from Course c where lower(c.name) like concat('%', lower(:input), '%')")
+	public List<Course> findAllBySubstring(@Param("input") String input);
 
 	@Query(value="select c from Course c where c.name=:pname")
 	public Course findByName(@Param("pname") String courseName);

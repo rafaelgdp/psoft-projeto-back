@@ -2,16 +2,10 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model;
 
 import java.util.*;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
@@ -25,7 +19,7 @@ public class Course {
     private Integer id;
 
     @OneToMany(mappedBy = "course")
-    private Set<User> userLikes = new HashSet<>();
+    private Set<User> likes = new HashSet<>();
 
     @OneToMany(mappedBy = "course")
     private List<Comment> comments = new ArrayList<>();
@@ -45,20 +39,20 @@ public class Course {
     public void setId(Integer id) { this.id = id; }
 
     public Set<User> getUserLikes() {
-        return userLikes;
+        return likes;
     }
 
     public void setUserLikes(Set<User> userLikes) {
-        this.userLikes = userLikes;
+        this.likes = userLikes;
     }
 
     public void addUserLike(User user) {
         if (user != null)
-            userLikes.add(user);
+            likes.add(user);
     }
 
     public void removeUserLike(User user) {
-        userLikes.remove(user);
+        likes.remove(user);
     }
 
 //	public Map<String, Double> getUserGrades() {

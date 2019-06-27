@@ -1,0 +1,126 @@
+[33mcommit 02ad3ae906a1e8474d181e8e113b630a802d6512[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m)[m
+Merge: 05a8e49 20e7915
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 26 22:56:12 2019 -0300
+
+    Merge da aula do LCC3 + Incrementos feitos em casa + conflitos do CourseController
+
+[33mcommit 05a8e491876d138b5a281b260fc524319cbd0c33[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 26 22:53:28 2019 -0300
+
+    Refatorando UserController + API de Cadastro e Deleção de Courses + URIDecoder
+
+[33mcommit 20e791500bab419a2cf99201b08eea9bb44f18ef[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 26 21:05:22 2019 -0300
+
+    Modificações realizadas na aula de hoje
+
+[33mcommit 13764f5df18f2d707f7a03e4cd9f5590528b451b[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 26 15:49:55 2019 -0300
+
+    Reorganizando algumas entidades relacionadas com Course
+
+[33mcommit fa9cf34360e56351c2fdb649dda57279e24c4ef0[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Tue Jun 25 15:20:05 2019 -0300
+
+    Usuario não encontrado retorna status code 400 agora
+
+[33mcommit b249a2451412b8c43caffe6a3cc496e0851cb635[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Sat Jun 22 20:09:03 2019 -0300
+
+    Exceptions para login/password errados. Inclusão de dados de user no jwt token.
+
+[33mcommit 980c4b2b806a479ef7f462cce34a095095161fff[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Sat Jun 22 00:53:58 2019 -0300
+
+    Login e Register funcionando com a API do backend
+
+[33mcommit e6b142866a51d845cd73aa07801df0e4441d0aa2[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Fri Jun 21 22:46:44 2019 -0300
+
+    Luta com CORS
+
+[33mcommit afa211908add08e18bfdd992b2808bf809730757[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Fri Jun 21 13:53:41 2019 -0300
+
+    Mudando de máquina
+
+[33mcommit 5489326bc021a7cea9b2c73f7e4cb6b525b2eb19[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Thu Jun 20 19:08:43 2019 -0300
+
+    Tentando corrigir problemas com CORS
+
+[33mcommit c0d133be2f56bc3847ba8c7739457abc86bc9abe[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 19 17:32:36 2019 -0300
+
+    Progresso na aula
+
+[33mcommit 5217cda9974d88b41e37453ea4b53c7806ac32fa[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 19 14:13:42 2019 -0300
+
+    ajustes nas entidades do bd
+
+[33mcommit d2c671060de50030364be85098a866dc07b9463c[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 19 12:19:38 2019 -0300
+
+    Tentando resolver conflitos no Course model com Sets, Maps, ...
+
+[33mcommit d96a053aa895ea681a1bfe53824aa2a754f6638c[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 19 12:01:50 2019 -0300
+
+    Adicionamos comentario, notas, likes, e alguns ajustes no CourseDAO
+
+[33mcommit 8506c2d5bb0d80d3c316bea45c563f9f430d7442[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 19 00:02:04 2019 -0300
+
+    Adicionando classes para Comments e ajuste do Query SQL
+
+[33mcommit 1e584c118e3bf8004d9a68efd119231d7783a131[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Fri Jun 14 12:25:28 2019 -0300
+
+    Adicionando busca por Course ao BD por substring
+
+[33mcommit eb511b48fd78f9671bd160b87ff2deb61f6e5ab4[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Thu Jun 13 19:43:17 2019 -0300
+
+    Continuando criação de classes relativas às disciplinas (Course)
+
+[33mcommit c5acd8a0545442cc2d0a7dc565cf0c787a208f4c[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Thu Jun 13 17:12:50 2019 -0300
+
+    Finalizando UC1 e começando o UC2
+
+[33mcommit ef665ee0fb361d7384a10df7fa29a745ada3c562[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Thu Jun 13 00:35:19 2019 -0300
+
+    Declarando classes iniciais para Requisito Funcional 1
+
+[33mcommit 8a38d69ae2a7c88aba9886f7b5a91bd3503aaeeb[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Thu Jun 13 00:22:19 2019 -0300
+
+    Criando projeto spring boot
+
+[33mcommit eaa5a195afec27fa0e40029911ca8d98c3e7d68d[m
+Author: Rafael Pontes <rafaelgpontes1@gmail.com>
+Date:   Wed Jun 12 17:16:13 2019 -0300
+
+    Criando o repositório

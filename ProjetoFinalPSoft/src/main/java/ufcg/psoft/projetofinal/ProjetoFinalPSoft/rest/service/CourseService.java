@@ -1,14 +1,13 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service;
 
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
-import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.CourseNotFoundException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao.CourseDAO;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Comment;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
