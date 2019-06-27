@@ -8,6 +8,8 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CourseService;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
 import javax.servlet.ServletException;
+
+import java.net.URLDecoder;
 import java.util.List;
 
 @RestController
@@ -24,22 +26,31 @@ public class CourseController {
     	return courses;
     }
 
-    @PostMapping("/courses")
+    @SuppressWarnings("deprecation")
+	@PostMapping("/courses")
     public Course addCourse(@RequestBody Course course) throws ServletException {
 
         if (course == null) {
             throw new ServletException("No valid course entered.");
         }
-
+        
+        URLDecoder decoder = new URLDecoder();
+        course.setName(decoder.decode(course.getName()));
         Course bdCourse = courseService.findByName(course.getName());
 
         if (bdCourse != null) {
             throw new ServletException("Course with this name already registered.");
         }
 
+        System.out.println("Saving this course: " + course.getName());
+
         return courseService.addCourse(course);
 
     }
     
+    @DeleteMapping("/courses")
+    public void deleteAllCourses() {
+    	courseService.deleteAll();
+    }
     
 }

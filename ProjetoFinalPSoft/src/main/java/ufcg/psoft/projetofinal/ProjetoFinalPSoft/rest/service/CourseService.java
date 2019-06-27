@@ -61,5 +61,9 @@ public class CourseService {
     	
     	return comment;
     }
+    
+    public void deleteAll() {
+    	courseDAO.deleteAll();
+    }
 
 }
