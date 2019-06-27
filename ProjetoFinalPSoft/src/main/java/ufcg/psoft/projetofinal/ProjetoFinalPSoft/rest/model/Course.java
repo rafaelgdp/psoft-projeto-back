@@ -1,8 +1,6 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,23 +24,11 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @ManyToMany
-    @JoinTable(name = "USER_LIKES",
-            joinColumns = {@JoinColumn(name = "courseId")},
-            inverseJoinColumns = {@JoinColumn(name = "userEmail")})
-    private Set<User> userLikes;
+    @OneToMany(mappedBy = "course")
+    private Set<User> userLikes = new HashSet<>();
 
-    @ManyToMany
-    @JoinTable(name = "USER_COMMENTS",
-            joinColumns = {@JoinColumn(name = "courseId")},
-            inverseJoinColumns = {@JoinColumn(name = "userEmail")})
-    private List<Comment> comments;
-
-    @ManyToMany
-    @JoinTable(name = "USER_GRADES",
-            joinColumns = {@JoinColumn(name = "courseId")},
-            inverseJoinColumns = {@JoinColumn(name = "userEmail")})
-    private List<Grade> grades;
+    @OneToMany(mappedBy = "course")
+    private List<Comment> comments = new ArrayList<>();
 
     private String name;
 

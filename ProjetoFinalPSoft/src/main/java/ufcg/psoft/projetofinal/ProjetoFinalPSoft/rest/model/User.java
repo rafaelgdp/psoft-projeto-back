@@ -5,11 +5,7 @@ import lombok.Data;
 import java.util.Map;
 import java.util.Set;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.MapKey;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 @Data
 @Entity
@@ -22,8 +18,8 @@ public class User {
     private String lastName;
     private String password;
 
-    @ManyToMany(mappedBy="userLikes")
-    private Set<Course> courses;
+    @ManyToOne
+    private Course course;
 
 //  @OneToMany(mappedBy="grade")
 //	@MapKey(name="email")
