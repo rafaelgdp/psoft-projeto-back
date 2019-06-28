@@ -1,11 +1,18 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model;
 
+import java.util.Date;
+
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 
 @Data
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Comment {
 	
 	@Id
@@ -13,11 +20,17 @@ public class Comment {
 	private Integer id;
 
 	@ManyToOne
-	private Course course;
+	@JoinColumn(name = "course_id")
+	private Course commentCourse; // This relates to course
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User commentAuthor; // This relates to User
+	
+	private Date date;
 
 	private String message;
-	private String email;
-
+	
 	public Integer getId() {
 		return id;
 	}
@@ -34,12 +47,30 @@ public class Comment {
 		this.message = message;
 	}
 
-	public String getEmail() {
-		return email;
+	public Course getCommentCourse() {
+		return commentCourse;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setCommentCourse(Course commentCourse) {
+		this.commentCourse = commentCourse;
 	}
+
+	public User getCommentAuthor() {
+		return commentAuthor;
+	}
+
+	public void setCommentAuthor(User commentAuthor) {
+		this.commentAuthor = commentAuthor;
+	}
+
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	
 	
 }

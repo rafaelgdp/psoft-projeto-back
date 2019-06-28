@@ -2,27 +2,38 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model;
 
 import java.util.*;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Data;
 
 @Data
 @Entity
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Course {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @OneToMany(mappedBy = "course")
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "course_user_likes",
+    joinColumns = @JoinColumn(name = "course_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_id"))
     private Set<User> likes = new HashSet<>();
 
-    @OneToMany(mappedBy = "course")
-    private List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "commentCourse")
+    private List<Comment> comments;
 
     private String name;
 
@@ -55,22 +66,6 @@ public class Course {
         likes.remove(user);
     }
 
-//	public Map<String, Double> getUserGrades() {
-//		return userGrades;
-//	}
-//
-//	public void setUserGrades(Map<User, Double> userGrades) {
-//		this.userGrades = userGrades;
-//	}
-//	
-//	public Double getGradeMean() {
-//		Double total = 0.0;
-//		for (Double grade : userGrades.values()) {
-//			total += grade;
-//		}
-//		return total / userGrades.size();
-//	}
-
     public List<Comment> getComments() {
         return comments;
     }
@@ -81,7 +76,20 @@ public class Course {
 
     public void addComment(Comment comment) {
         if (comment != null) {
+        	if (comments == null) {
+        		comments = new ArrayList<>();
+        	}
             comments.add(comment);
         }
     }
+    
+    public String toString() {
+    	String r = getId() + " - " + getName() + " - " + likes.toString() + " - ";
+    	for (Comment c : comments) {
+    		r += c.getCommentAuthor().getEmail() + ": " + c.getMessage();
+    	}
+    	r += " #" + comments.size();
+    	return r;
+    }
+    
 }

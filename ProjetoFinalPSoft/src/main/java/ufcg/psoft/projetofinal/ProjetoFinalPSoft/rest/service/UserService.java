@@ -28,7 +28,7 @@ public class UserService {
         return userDAO.save(user);
     }
 
-    public User update(User userToUpdate) throws UserNotFoundException {
+    public User update(User userToUpdate) {
 
         User user = userDAO.findByEmail(userToUpdate.getEmail());
 
