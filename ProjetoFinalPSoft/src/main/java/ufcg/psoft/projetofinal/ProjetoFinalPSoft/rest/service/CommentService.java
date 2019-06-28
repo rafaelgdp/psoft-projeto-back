@@ -20,4 +20,8 @@ public class CommentService {
 	public Comment create(Comment comment) {
 		return commentDAO.save(comment);
 	}
+	
+	public void delete(Comment comment) {
+		commentDAO.delete(comment);
+	}
 }

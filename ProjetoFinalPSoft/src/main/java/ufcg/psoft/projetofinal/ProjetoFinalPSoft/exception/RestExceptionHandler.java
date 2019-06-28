@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.CommentNotFoundException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.NullCommentException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.CourseAlreadyRegisteredException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.NullCourseException;
@@ -35,6 +36,7 @@ public class RestExceptionHandler {
     @ExceptionHandler({
     	WrongEmailOrPasswordException.class,
     	UserNotFoundException.class,
+    	CommentNotFoundException.class,
     	NullCommentException.class,
     	NullCourseException.class,
     	NullUserException.class})

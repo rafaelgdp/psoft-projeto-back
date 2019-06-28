@@ -16,7 +16,10 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CourseService;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 
@@ -45,15 +48,22 @@ public class CourseController {
     	return courses;
     }
     
-    @GetMapping("/profile{id}")
-    public Course getCourseById(@RequestParam(name = "id") Integer id) {
+    @GetMapping("/profile{courseid}")
+    public Course getCourseById(@RequestParam(name = "courseid") Integer id) {
     	System.out.println("Looking for course with id " + id);
 		Course course = courseService.findById(id);
 		if (course == null) {
 			System.out.println("Found nothing!");
 			throw new CourseNotFoundException("Course not found!");
 		}
+		for (Iterator<User> i = course.getUserLikes().iterator(); i.hasNext();) {
+			cleanUserPassword(i.next());
+		}
 		return course;
+    }
+    
+    private void cleanUserPassword(User user) {
+    	user.setPassword("x");
     }
     
     @GetMapping("")
@@ -84,8 +94,8 @@ public class CourseController {
 
     }
     
-    @PostMapping("/addcomment{id}")
-    public String addCommentToCourse(@RequestParam(name = "id") Integer id, @RequestBody Comment comment) {
+    @PostMapping("/comment{courseid}")
+    public String addCommentToCourse(@RequestParam(name = "courseid") Integer id, @RequestBody Comment comment) {
     	
     	System.out.println("Got " + id + " " + comment.getMessage());
     	
@@ -108,29 +118,42 @@ public class CourseController {
     	return comment.getMessage();
     }
     
-    @DeleteMapping("/addcomment{id}")
-    public String deleteCommentFromCourse(
-    		@RequestParam(name = "courseId") Integer courseId,
-    		@RequestParam(name = "commentId") Integer commentId) {
-    	
-    	if (courseId == null) {
-    		throw new NullCourseException("Null course ID!");
-    	}
-		if (commentId == null) {
+    @DeleteMapping("/comment{commentid}")
+    public String deleteCommentFromCourse(@RequestParam(name = "commentid") Integer commentId) {
+
+    	if (commentId == null) {
 			throw new NullCommentException("Null comment ID!"); 
     	}
     	
-    	Course course = courseService.findById(courseId);
-    	
-    	if (course == null) { 
-    		throw new CourseNotFoundException("Course not found on database");
-    	}
-    	
     	Comment comment = commentService.findCommentById(commentId);
-    	
-    	courseService.addComment(courseId, comment);
+
+    	commentService.delete(comment);
     	
     	return comment.getMessage();
+    }
+    
+    @GetMapping("/comments{courseid}")
+    public List<Comment> getCourseComments(@RequestParam(name = "courseid") Integer courseid) {
+    	
+    	if (courseid == null) {
+    		throw new NullCourseException("Course ID null!");
+    	}
+    	
+    	Course course = courseService.findById(courseid);
+    	
+    	if (course == null) {
+    		throw new CourseNotFoundException("Course with desired ID not found!");
+    	}
+    	
+    	ArrayList<Comment> comments = new ArrayList<>();
+    	List<Comment> foundComments = course.getComments();
+    	for (Comment c : foundComments) {
+    		c.getCommentAuthor().setPassword("x"); // This is not to leak user's password.
+    		comments.add(c);
+    	}
+    	
+    	return comments;
+    		
     }
     
     @DeleteMapping("")

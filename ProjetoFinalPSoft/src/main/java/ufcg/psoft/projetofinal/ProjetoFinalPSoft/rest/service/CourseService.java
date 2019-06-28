@@ -2,6 +2,7 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service;
 
 import org.springframework.stereotype.Service;
 
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.CommentNotFoundException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.NullCommentException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.course.CourseNotFoundException;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.user.UserNotFoundException;
@@ -10,6 +11,7 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Comment;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -68,6 +70,16 @@ public class CourseService {
     	comment.setCommentCourse(course);
     	commentService.create(comment);
     	return comment;
+    }
+    
+    public List<Comment> findAllCourseComments(Course course) {
+    	
+    	if (course == null) {
+    		throw new CourseNotFoundException("Course not found!");
+    	}
+
+    	return course.getComments();
+    	
     }
     
     public void deleteAll() {
