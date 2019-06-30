@@ -1,5 +1,7 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.dao.CommentDAO;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Comment;
@@ -23,5 +25,9 @@ public class CommentService {
 	
 	public void delete(Comment comment) {
 		commentDAO.delete(comment);
+	}
+
+	public List<Comment> findCommentsByCourseId(Integer courseId) {
+		return commentDAO.findCommentByCourseId(courseId);
 	}
 }

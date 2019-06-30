@@ -1,6 +1,7 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.NullCommentException;
@@ -80,8 +81,7 @@ public class CourseController {
             throw new NullCourseException("No valid course entered.");
         }
         
-        URLDecoder decoder = new URLDecoder();
-        course.setName(decoder.decode(course.getName()));
+        course.setName(URLDecoder.decode(course.getName()));
         Course bdCourse = courseService.findByName(course.getName());
 
         if (bdCourse != null) {
@@ -146,10 +146,12 @@ public class CourseController {
     	}
     	
     	ArrayList<Comment> comments = new ArrayList<>();
-    	List<Comment> foundComments = course.getComments();
+    	List<Comment> foundComments = commentService.findCommentsByCourseId(course.getId());
     	for (Comment c : foundComments) {
     		c.getCommentAuthor().setPassword("x"); // This is not to leak user's password.
-    		comments.add(c);
+    		if (c.getCommentCourse().getId() == course.getId()) {
+    			comments.add(c);
+    		}
     	}
     	
     	return comments;
