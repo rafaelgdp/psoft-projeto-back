@@ -18,6 +18,7 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -133,7 +134,7 @@ public class CourseController {
     }
     
     @GetMapping("/comments{courseid}")
-    public List<Comment> getCourseComments(@RequestParam(name = "courseid") Integer courseid) {
+    public List<CommentResponse> getCourseComments(@RequestParam(name = "courseid") Integer courseid) {
     	
     	if (courseid == null) {
     		throw new NullCourseException("Course ID null!");
@@ -145,17 +146,25 @@ public class CourseController {
     		throw new CourseNotFoundException("Course with desired ID not found!");
     	}
     	
-    	ArrayList<Comment> comments = new ArrayList<>();
+    	ArrayList<CommentResponse> comments = new ArrayList<>();
     	List<Comment> foundComments = commentService.findCommentsByCourseId(course.getId());
     	for (Comment c : foundComments) {
-    		c.getCommentAuthor().setPassword("x"); // This is not to leak user's password.
-    		if (c.getCommentCourse().getId() == course.getId()) {
-    			comments.add(c);
-    		}
+    		comments.add(new CommentResponse(c.getCommentAuthor().getEmail(), c.getMessage(), c.getDate()));
     	}
-    	
     	return comments;
-    		
+    }
+    
+    private class CommentResponse {
+    	
+    	public String commentAuthor;
+    	public String message;
+    	public Date date;
+    	
+    	public CommentResponse (String a, String m, Date d) {
+    		commentAuthor = a;
+    		message = m;
+    		date = d;
+    	}
     }
     
     @DeleteMapping("")
