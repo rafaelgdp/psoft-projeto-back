@@ -56,15 +56,27 @@ public class UserController {
                 setExpiration(new Date(System.currentTimeMillis() + 1 * 60 * 1000)).
                 compact();
 
-        return new LoginResponse(token, authUser);
+        return new LoginResponse(token, new UserResponse(authUser.getFirstName(), authUser.getLastName(), authUser.getEmail()));
 
+    }
+    
+    private class UserResponse {
+    	public String firstName;
+    	public String lastName;
+    	public String email;
+    	
+    	public UserResponse(String f, String l, String e) {
+    		firstName = f;
+    		lastName = l;
+    		email = e;
+    	}
     }
     
     private class LoginResponse {
         public String token;
-        public User user;
+        public UserResponse user;
 
-        public LoginResponse(String token, User user) {
+        public LoginResponse(String token, UserResponse user) {
             this.token = token;
             this.user = user;
         }

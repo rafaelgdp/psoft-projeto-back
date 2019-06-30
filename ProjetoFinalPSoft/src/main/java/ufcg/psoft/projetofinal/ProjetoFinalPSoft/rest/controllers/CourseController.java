@@ -149,7 +149,9 @@ public class CourseController {
     	ArrayList<CommentResponse> comments = new ArrayList<>();
     	List<Comment> foundComments = commentService.findCommentsByCourseId(course.getId());
     	for (Comment c : foundComments) {
-    		comments.add(new CommentResponse(c.getCommentAuthor().getEmail(), c.getMessage(), c.getDate()));
+    		User author = c.getCommentAuthor();
+    		String name = author.getFirstName() + " " + author.getLastName() + " (" + author.getEmail() + ")"; 
+    		comments.add(new CommentResponse(name, c.getMessage(), c.getDate()));
     	}
     	return comments;
     }
