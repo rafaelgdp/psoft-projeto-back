@@ -47,8 +47,6 @@ public class UserController {
         if(!authUser.getPassword().equals(user.getPassword())) {
             throw new WrongEmailOrPasswordException("Senha invalida!");
         }
-        
-        authUser.setPassword("no security holes here, pal ;)");
 
         String token = Jwts.builder().
                 setSubject(authUser.getEmail()).

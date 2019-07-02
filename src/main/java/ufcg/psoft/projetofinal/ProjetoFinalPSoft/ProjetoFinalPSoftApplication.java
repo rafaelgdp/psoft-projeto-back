@@ -8,6 +8,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.filters.TokenFilter;
+
 @SpringBootApplication
 public class ProjetoFinalPSoftApplication {
 	
@@ -20,6 +22,15 @@ public class ProjetoFinalPSoftApplication {
 		FilterRegistrationBean bean = new FilterRegistrationBean(new CorsFilter(source));
 		bean.setOrder(0);
 		return bean;
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Bean
+	public FilterRegistrationBean filterJwt() {
+		FilterRegistrationBean filterRb = new FilterRegistrationBean<>();
+		filterRb.setFilter(new TokenFilter());
+		filterRb.addUrlPatterns("/v1/courses**");
+		return filterRb;
 	}
 
 	public static void main(String[] args) {

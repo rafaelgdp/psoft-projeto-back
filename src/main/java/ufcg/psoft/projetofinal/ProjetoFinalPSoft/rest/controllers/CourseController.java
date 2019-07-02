@@ -68,13 +68,13 @@ public class CourseController {
     	user.setPassword("x");
     }
     
-    @GetMapping("")
+    @GetMapping("/")
     public List<Course> getAllCourses() {
     	return courseService.findAll();
     }
 
     @SuppressWarnings("deprecation")
-    @PostMapping("")
+    @PostMapping("/addcourse")
     public Course addCourse(@RequestBody Course course) throws NullCourseException, CourseAlreadyRegisteredException {
 
     	System.out.println("Got...");
@@ -95,7 +95,7 @@ public class CourseController {
 
     }
     
-    @PostMapping("/comment{courseid}")
+    @PostMapping("/addcomment{courseid}")
     public String addCommentToCourse(@RequestParam(name = "courseid") Integer id, @RequestBody Comment comment) {
     	
     	System.out.println("Got " + id + " " + comment.getMessage());
@@ -114,25 +114,16 @@ public class CourseController {
     		throw new CourseNotFoundException("Course not found on database");
     	}
     	
+    	comment.setDeleted(false);
+    	
     	courseService.addComment(id, comment);
     	
     	return comment.getMessage();
     }
     
-    @DeleteMapping("/comment{commentid}")
-    public String deleteCommentFromCourse(@RequestParam(name = "commentid") Integer commentId) {
-
-    	if (commentId == null) {
-			throw new NullCommentException("Null comment ID!"); 
-    	}
-    	
-    	Comment comment = commentService.findCommentById(commentId);
-
-    	commentService.delete(comment);
-    	
-    	return comment.getMessage();
-    }
-    
+    /*
+     * Returns all the comments from a course profile.
+     * */
     @GetMapping("/comments{courseid}")
     public List<CommentResponse> getCourseComments(@RequestParam(name = "courseid") Integer courseid) {
     	
@@ -149,27 +140,57 @@ public class CourseController {
     	ArrayList<CommentResponse> comments = new ArrayList<>();
     	List<Comment> foundComments = commentService.findCommentsByCourseId(course.getId());
     	for (Comment c : foundComments) {
-    		User author = c.getCommentAuthor();
-    		String name = author.getFirstName() + " " + author.getLastName() + " (" + author.getEmail() + ")"; 
-    		comments.add(new CommentResponse(name, c.getMessage(), c.getDate()));
+    		if (c.getDeleted() == false) {
+    			User author = c.getCommentAuthor();
+        		String name = author.getFirstName() + " " + author.getLastName(); 
+        		comments.add(new CommentResponse(c.getId(), name, author.getEmail(), c.getMessage(), c.getDate()));	
+    		}
     	}
     	return comments;
     }
     
+    /*
+     * Simple DTO to return only necessary field from comments to the frontend.
+     * */
     private class CommentResponse {
     	
+    	public Integer id;
     	public String commentAuthor;
+    	public String email;
     	public String message;
     	public Date date;
     	
-    	public CommentResponse (String a, String m, Date d) {
+    	public CommentResponse (Integer i, String a, String e, String m, Date d) {
+    		id = i;
     		commentAuthor = a;
+    		email = e;
     		message = m;
     		date = d;
     	}
     }
     
-    @DeleteMapping("")
+    /*
+     * This method deletes a comment by its id.
+     * */
+    @DeleteMapping("/deletecomment{commentid}")
+    public String deleteCommentFromCourse(@RequestParam(name = "commentid") Integer commentId) {
+
+    	if (commentId == null) {
+			throw new NullCommentException("Null comment ID!"); 
+    	}
+    	
+    	Comment comment = commentService.findCommentById(commentId);
+    	comment.setDeleted(true);
+    	commentService.save(comment);
+    	
+    	return comment.getMessage();
+    }
+    
+    /*
+     * Deletes all comments on the db. This is mainly for administrative purposes.
+     * This route would be only accessible from specific IPs or users.
+     * */
+    @DeleteMapping("/deleteall")
     public void deleteAllCourses() {
     	courseService.deleteAll();
     }

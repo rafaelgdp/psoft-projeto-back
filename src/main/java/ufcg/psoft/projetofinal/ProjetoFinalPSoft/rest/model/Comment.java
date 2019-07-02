@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -26,10 +25,12 @@ public class Comment {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User commentAuthor; // This relates to User
-	
+		
 	private Date date;
 
 	private String message;
+	
+	private Boolean deleted;
 	
 	public Integer getId() {
 		return id;
@@ -69,6 +70,14 @@ public class Comment {
 
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
 	}
 	
 }

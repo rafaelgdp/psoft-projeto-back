@@ -23,11 +23,11 @@ public class CommentService {
 		return commentDAO.save(comment);
 	}
 	
-	public void delete(Comment comment) {
-		commentDAO.delete(comment);
-	}
-
 	public List<Comment> findCommentsByCourseId(Integer courseId) {
 		return commentDAO.findCommentByCourseId(courseId);
+	}
+
+	public void save(Comment comment) {
+		commentDAO.save(comment);
 	}
 }
