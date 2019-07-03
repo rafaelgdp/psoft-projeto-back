@@ -29,7 +29,7 @@ public class TokenFilter extends GenericFilterBean {
 		String token = header.substring(7);
 
 		try {
-			Jwts.parser().setSigningKey("banana").parseClaimsJws(token).getBody();
+			System.out.println(Jwts.parser().setSigningKey("banana").parseClaimsJws(token).getBody());
 		} catch (SignatureException e) {
 			throw new ServletException("Token invalido ou expirado!");
 		}
@@ -38,24 +38,7 @@ public class TokenFilter extends GenericFilterBean {
 	}
 	
 	public Boolean checkUserToken(String token, String email) throws IOException, ServletException {
-
-
-		String header = req.getHeader("Authorization");
-
-		if (header == null || !header.startsWith("Bearer ")) {
-			throw new ServletException("Token inexistente ou mal formatado!");
-		}
-
-		// Extraindo apenas o token do cabecalho.
-		String token = header.substring(7);
-
-		try {
-			Jwts.parser().setSigningKey("banana").parseClaimsJws(token).getBody();
-		} catch (SignatureException e) {
-			throw new ServletException("Token invalido ou expirado!");
-		}
-
-		chain.doFilter(request, response);
+		return null;
 	}
 
 }

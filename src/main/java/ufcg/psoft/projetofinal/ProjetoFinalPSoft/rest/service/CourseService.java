@@ -86,4 +86,9 @@ public class CourseService {
     	courseDAO.deleteAll();
     }
 
+	public void addLike(Course course, User user) {
+		course.addUserLike(user);
+		courseDAO.save(course);		
+	}
+
 }

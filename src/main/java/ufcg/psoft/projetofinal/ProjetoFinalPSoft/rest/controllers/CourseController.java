@@ -2,6 +2,7 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.web.bind.annotation.*;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.NullCommentException;
@@ -51,23 +52,34 @@ public class CourseController {
     }
     
     @GetMapping("/profile{courseid}")
-    public Course getCourseById(@RequestParam(name = "courseid") Integer id) {
+    public CourseResponse getCourseById(@RequestParam(name = "courseid") Integer id) {
     	System.out.println("Looking for course with id " + id);
 		Course course = courseService.findById(id);
 		if (course == null) {
 			System.out.println("Found nothing!");
 			throw new CourseNotFoundException("Course not found!");
 		}
-		for (Iterator<User> i = course.getUserLikes().iterator(); i.hasNext();) {
-			cleanUserPassword(i.next());
+		
+		CourseResponse cr = new CourseResponse(course.getName());
+		
+		for (User u : course.getUserLikes()) {
+			cr.likes.add(u.getEmail());
 		}
-		return course;
+		
+		return cr;
     }
     
-    private void cleanUserPassword(User user) {
-    	user.setPassword("x");
+    private class CourseResponse {
+    	public List<String> likes;
+    	public String name;
+    	
+    	public CourseResponse(String name) {
+    		this.name = name;
+    		likes = new ArrayList<>();
+    	}
     }
     
+   
     @GetMapping("/")
     public List<Course> getAllCourses() {
     	return courseService.findAll();
@@ -193,6 +205,29 @@ public class CourseController {
     @DeleteMapping("/deleteall")
     public void deleteAllCourses() {
     	courseService.deleteAll();
+    }
+    
+    @PostMapping("/addlike{courseid}")
+    public Boolean addLike(
+    		@RequestParam(name = "courseid") Integer courseId,
+    		@RequestBody User user) {
+    	if (courseId == null || user == null) {
+    		throw new RequestRejectedException("Invalid request!");
+    	}
+    	
+    	Course course = courseService.findById(courseId);
+    	
+    	if (course == null) {
+    		throw new CourseNotFoundException("Course not found!");
+    	}
+    	
+    	if (!course.getUserLikes().contains(user)) {
+    		course.addUserLike(user);
+    	}
+    	
+    	courseService.addLike(course, user);
+    	
+		return null;
     }
 
 }

@@ -29,7 +29,8 @@ public class ProjetoFinalPSoftApplication {
 	public FilterRegistrationBean filterJwt() {
 		FilterRegistrationBean filterRb = new FilterRegistrationBean<>();
 		filterRb.setFilter(new TokenFilter());
-		filterRb.addUrlPatterns("/v1/courses**");
+		filterRb.addUrlPatterns("/v1/courses/**");
+		System.out.println("Got here");
 		return filterRb;
 	}
 
