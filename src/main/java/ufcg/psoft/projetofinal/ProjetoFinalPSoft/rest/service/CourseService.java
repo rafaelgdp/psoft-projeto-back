@@ -87,8 +87,14 @@ public class CourseService {
     }
 
 	public void addLike(Course course, User user) {
+		user.setPassword(userService.findByEmail(user.getEmail()).getPassword());
 		course.addUserLike(user);
-		courseDAO.save(course);		
+		courseDAO.save(course);
+	}
+
+	public void removeLike(Course course, User user) {
+		course.removeUserLike(user);
+		courseDAO.save(course);
 	}
 
 }

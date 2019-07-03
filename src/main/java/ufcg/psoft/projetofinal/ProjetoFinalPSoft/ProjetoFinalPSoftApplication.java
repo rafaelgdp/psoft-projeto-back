@@ -24,16 +24,6 @@ public class ProjetoFinalPSoftApplication {
 		return bean;
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@Bean
-	public FilterRegistrationBean filterJwt() {
-		FilterRegistrationBean filterRb = new FilterRegistrationBean<>();
-		filterRb.setFilter(new TokenFilter());
-		filterRb.addUrlPatterns("/v1/courses/**");
-		System.out.println("Got here");
-		return filterRb;
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(ProjetoFinalPSoftApplication.class, args);
 	}

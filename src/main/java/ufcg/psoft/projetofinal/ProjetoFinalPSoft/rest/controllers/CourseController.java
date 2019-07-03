@@ -208,7 +208,7 @@ public class CourseController {
     }
     
     @PostMapping("/addlike{courseid}")
-    public Boolean addLike(
+    public void addLike(
     		@RequestParam(name = "courseid") Integer courseId,
     		@RequestBody User user) {
     	if (courseId == null || user == null) {
@@ -221,13 +221,12 @@ public class CourseController {
     		throw new CourseNotFoundException("Course not found!");
     	}
     	
-    	if (!course.getUserLikes().contains(user)) {
+    	if (!course.checkIfUserLiked(user.getEmail())) {
     		course.addUserLike(user);
+    		courseService.addLike(course, user);
+    	} else {
+    		courseService.removeLike(course, user);
     	}
-    	
-    	courseService.addLike(course, user);
-    	
-		return null;
     }
 
 }

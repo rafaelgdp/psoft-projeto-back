@@ -34,6 +34,11 @@ public class UserController {
     @PostMapping("/login")
     public LoginResponse retrieveUserDetails(@RequestBody User user) throws ServletException {
 
+    	// verificacoes
+        if(user == null) {
+            throw new UserNotFoundException("Usuario nulo!");
+        }
+    	
         // Recupera o usuario
         User authUser = userService.findByEmail(user.getEmail());
         

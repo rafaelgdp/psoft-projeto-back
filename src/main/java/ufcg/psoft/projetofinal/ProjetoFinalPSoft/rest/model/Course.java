@@ -58,12 +58,19 @@ public class Course {
     }
 
     public void addUserLike(User user) {
-        if (user != null)
+        if (user != null && !likes.contains(user))
             likes.add(user);
     }
 
     public void removeUserLike(User user) {
-        likes.remove(user);
+    	if (user != null) {
+    		for (User u : this.getUserLikes()) {
+        		if (u.getEmail().equals(user.getEmail())) {
+        			this.likes.remove(u);
+        			break;
+        		}
+        	}	
+    	}
     }
 
     public List<Comment> getComments() {
@@ -91,5 +98,13 @@ public class Course {
     	r += " #" + comments.size();
     	return r;
     }
+
+	public boolean checkIfUserLiked(String email) {
+		for (User u : getUserLikes()) {
+			if (u.getEmail().equals(email))
+				return true;
+		}
+		return false;
+	}
     
 }
