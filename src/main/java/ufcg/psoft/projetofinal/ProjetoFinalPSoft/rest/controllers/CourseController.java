@@ -2,7 +2,6 @@ package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.firewall.RequestRejectedException;
 import org.springframework.web.bind.annotation.*;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.NullCommentException;
@@ -212,7 +211,7 @@ public class CourseController {
     		@RequestParam(name = "courseid") Integer courseId,
     		@RequestBody User user) {
     	if (courseId == null || user == null) {
-    		throw new RequestRejectedException("Invalid request!");
+    		throw new NullCourseException("Invalid request!");
     	}
     	
     	Course course = courseService.findById(courseId);
