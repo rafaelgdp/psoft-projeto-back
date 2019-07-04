@@ -1,7 +1,6 @@
 package ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.exception.comment.NullCommentException;
@@ -14,17 +13,15 @@ import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.Course;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.model.User;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CommentService;
 import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.CourseService;
-import ufcg.psoft.projetofinal.ProjetoFinalPSoft.rest.service.UserService;
 
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
-import javax.servlet.ServletException;
-
+/**
+ * @author Rafael Pontes
+  */
 @RestController
 @RequestMapping("/v1/courses")
 @CrossOrigin(origins = "*")
@@ -35,10 +32,10 @@ public class CourseController {
     
     @Autowired
     private CommentService commentService;
-    
-    @Autowired
-    private UserService userService;
 
+    /*
+     * Method that returns all the courses whose name contain the substring passed on the req. body.
+     * */
     @PostMapping("/find")
     public List<Course> getAllCoursesBySubstring(@RequestBody String substring) {
     	// For some reason, leading and ending " were arriving within the request body! :S
@@ -50,6 +47,9 @@ public class CourseController {
     	return courses;
     }
     
+    /*
+     * Returns courses's profile info
+     * */
     @GetMapping("/profile{courseid}")
     public CourseResponse getCourseById(@RequestParam(name = "courseid") Integer id) {
     	System.out.println("Looking for course with id " + id);
@@ -78,12 +78,17 @@ public class CourseController {
     	}
     }
     
-   
+   /*
+    * This method was made for debugging.
+    * */
     @GetMapping("/")
     public List<Course> getAllCourses() {
     	return courseService.findAll();
     }
 
+    /*
+     * Route to add a new course on the database.
+     * */
     @SuppressWarnings("deprecation")
     @PostMapping("/addcourse")
     public Course addCourse(@RequestBody Course course) throws NullCourseException, CourseAlreadyRegisteredException {
@@ -106,6 +111,9 @@ public class CourseController {
 
     }
     
+    /*
+     * Add comment to a course.
+     * */
     @PostMapping("/addcomment{courseid}")
     public String addCommentToCourse(@RequestParam(name = "courseid") Integer id, @RequestBody Comment comment) {
     	
